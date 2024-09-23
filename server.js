@@ -9,10 +9,12 @@ const fs = require('fs');
 app.use(cors());
 
 // Load your SSL certificate and key
-const httpsOptions = {
-    key: fs.readFileSync('/Users/brandongrayson/Desktop/code/projects/cobblestone/server.key'),
-    cert: fs.readFileSync('/Users/brandongrayson/Desktop/code/projects/cobblestone/server.cert')
-  };
+// I tried making the request an https request to see if that was the reason the word add in wasn't able
+// to access the api
+// const httpsOptions = {
+//     key: fs.readFileSync('/Users/brandongrayson/Desktop/code/projects/cobblestone/server.key'),
+//     cert: fs.readFileSync('/Users/brandongrayson/Desktop/code/projects/cobblestone/server.cert')
+// };
 
 // because GetTemplates is interacting with a db this would need to be an async funtion
 const GetTemplates = () => {
@@ -37,6 +39,7 @@ app.get('/', (req, res) => {
 })
 
 // route for user to access templates
+// req and res represent the request and response objects
 app.get('/templates', (req, res) => {
     // calling the GetTemplates function to return all templates 
     const allTemplates = GetTemplates()
@@ -44,6 +47,11 @@ app.get('/templates', (req, res) => {
 })
 
 // what port node.js is running on
-https.createServer(httpsOptions, app).listen(port, () => {
-    console.log(`Example app listening on https://localhost:${port}`);
-  });
+
+app.listen(port, () => {
+    console.log(`Cobblestone addin server app listening on port ${port}`)
+})
+// creating an https server
+// https.createServer(httpsOptions, app).listen(port, () => {
+//     console.log(`Example app listening on https://localhost:${port}`);
+// });
